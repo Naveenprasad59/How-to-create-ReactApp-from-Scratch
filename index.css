@@ -1,0 +1,7 @@
+.container {
+    display: flex;
+}
+
+.redText {
+    color: red;
+}
