@@ -1,12 +1,9 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin")
+const HtmlBundlerPlugin = require('html-bundler-webpack-plugin');
 
 module.exports = {
-    mode: "production",
-    entry: "/index.js",
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'output.js',
         clean: true
     },
     module: {
@@ -16,10 +13,10 @@ module.exports = {
                 exclude: /node_modules/,
                 use: "babel-loader"
             },
-            // {
-            //     test: /\.css$/,
-            //     use: ["style-loader","css-loader"]
-            // },
+            {
+                test: /\.css$/,
+                use: ["css-loader"]
+            },
 
             // {
             //     test: /\.(svg|png|jpg|jpeg)$/i,
@@ -31,13 +28,22 @@ module.exports = {
         extensions: [".js",".jsx"]
     },
     plugins: [
-       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "public/index.html")
-       })
+        new HtmlBundlerPlugin({
+            entry: {
+                index: "public/index.html", // output to dist/index.html
+            },
+            js: {
+                filename: "js/[name].[contenthash:8].js", // output JS filename
+            },
+            css: {
+                filename: "css/[name].[contenthash:8].css", // output CSS filename in production mode
+                hot: true, // enable HMR for CSS in development mode
+            },
+        }),
     ],
     devServer: {
         port: 3000,
-        static: "/dist"
+        static: "/dist",
     }
 }
 
