@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import {Placeholder} from './App'
 
-// import './index.css'
+import './index.css'
 
 const App = () => {
     return <div className="redText"><Placeholder />This is a div tag </div>
